@@ -1,14 +1,14 @@
-from dataclasses import dataclass
 from typing import Tuple
-from PIL import Image 
+from dataclasses import dataclass
+from PIL import Image
 
 
 @dataclass
 class RgbColor:
-    red : int = 0
-    green : int = 0
-    blue : int = 0
-    average : Tuple[int, int, int] = None
+    red: int = 0
+    green: int = 0
+    blue: int = 0
+    average: Tuple[int, int, int] = None
 
     def add_rgb(self, rgb_values: Tuple[int, int, int]):
         self.red += rgb_values[0]
