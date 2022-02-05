@@ -4,54 +4,76 @@ import pathlib
 
 def argparse_setup() -> argparse.ArgumentParser.parse_args:
     """Setup and return argparse."""
-    parser = argparse.ArgumentParser(description="Image Manipulator")
+    parser = argparse.ArgumentParser(description="Image Manipulator by Crinibus")
 
     parser.add_argument(
         "-in",
-        "--input_path",
+        "--input-path",
         help="path to input image to manipulate",
         type=pathlib.Path,
-        # type=str,
         dest="input_path",
-        metavar="path",
+        metavar="PATH",
         # required=True,
     )
 
     parser.add_argument(
         "-out",
-        "--output_path",
+        "--output-path",
         help="path to output image",
-        type=str,
+        type=pathlib.Path,
         dest="output_path",
-        metavar="path",
-        # required=True,
+        metavar="PATH",
     )
 
     parser.add_argument(
         "--pixel",
-        help="create new image with pixels of size 'width', 'height' that are color averages in that area",
+        help="pixelate image, use with --size to set size of each pixel or with --pixel-count to specify how many pixels",
+        dest="pixel",
+        action="store_true",
+    )
+
+    parser.add_argument(
+        "--pixel-count",
+        help="specify number of vertical and horizontal pixels",
         type=int,
         nargs=2,
-        dest="pixel_size",
-        metavar=("width", "height"),
+        dest="pixel_count",
+        metavar=("WIDTH", "HEIGHT"),
     )
 
     parser.add_argument(
         "-a",
         "--average",
         help="create new image that that the average color of input image",
+        dest="average",
+        action="store_true",
+    )
+
+    parser.add_argument(
+        "--get-average",
+        help="get the average color of input image",
+        dest="get_average",
         action="store_true",
     )
 
     parser.add_argument(
         "--create",
-        help="create a image of a specified size --size and color with flag --color",
+        help="create a image of a specified size with --size and color with flag --color",
+        dest="create",
         action="store_true",
     )
 
     parser.add_argument(
         "--resize",
-        help="resize an image to specified size --size",
+        help="resize an image to specified size with --size",
+        dest="resize",
+        action="store_true",
+    )
+
+    parser.add_argument(
+        "--allow-crop",
+        help="allow cropping the image if e.g. the pixelated area does not cover whole input image",
+        dest="allow_crop",
         action="store_true",
     )
 
@@ -61,12 +83,16 @@ def argparse_setup() -> argparse.ArgumentParser.parse_args:
         type=int,
         nargs=2,
         dest="size",
-        metavar=("width", "height"),
+        metavar=("WIDTH", "HEIGHT"),
     )
 
     parser.add_argument(
         "--color",
-        help="specify color",
+        help=(
+            "specify color, supports RGB, HSL and HSV functions, hexadecimal and common HTML color names. "
+            "See Pillow ImageColor module for examples"
+        ),
+        dest="color",
         type=str,
     )
 
@@ -77,19 +103,28 @@ def validate_arguments(parser: argparse.ArgumentParser) -> argparse.ArgumentPars
     """Validate arguments"""
     args = parser.parse_args()
 
-    if args.pixel_size or args.average:
+    if args.pixel and args.average:
+        print("Both --pixel and --average is used, this will result in only the average image to be created (overwrite image)")
+
+    if args.pixel or args.average:
         if not args.input_path or not args.output_path:
-            parser.error("Need --input_path and --output_path when using --pixel or --average")
+            parser.error("Need --input-path and --output-path when using --pixel or --average")
+
+    if args.pixel:
+        if not args.size and not args.pixel_count:
+            parser.error("Need --size or --pixel-count when using --pixel")
+        elif args.size and args.pixel_count:
+            parser.error("Using both --size and --pixel-count is conflicting")
 
     if args.create:
-        if not args.output_path:
-            parser.error("Need --output_path when using --create")
+        if not args.output_path or not args.size or not args.color:
+            parser.error("Need --output-path, --size and --color when using --create")
 
     if args.resize:
         if not args.size or not args.output_path or not args.input_path:
-            parser.error("Need --output_path, --input_path and --size when using --resize")
+            parser.error("Need --output-path, --input-path and --size when using --resize")
 
-    if args.pixel_size and args.average:
-        parser.error("Both --pixel and --average is used, this will result in only one image to be created")
+    if args.pixel_count and not args.pixel:
+        parser.error("Are you missing --pixel?")
 
     return args
