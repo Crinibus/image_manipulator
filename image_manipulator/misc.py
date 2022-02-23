@@ -35,6 +35,16 @@ class RgbColor:
         # convert from base 16 to base 10 in pairs of two digits
         return [int(hex_value[i : i + 2], 16) for i in range(0, len(hex_value), 2)]
 
+    @staticmethod
+    def is_hex(color_input: str) -> bool:
+        if len(color_input) != 7 or not color_input.startswith("#"):
+            return False
+
+        try:
+            return isinstance(int(color_input[1:7], 16), int)
+        except ValueError:
+            return False
+
     def __str__(self) -> str:
         return f"{self.red}, {self.green}, {self.blue}"
 
