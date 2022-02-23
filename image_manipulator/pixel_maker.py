@@ -97,8 +97,6 @@ def pixelate(image: Image, pixel_width: int, pixel_height: int, image_size: Tupl
     pixel_count_width = image_size[0] // pixel_width
     pixel_count_height = image_size[1] // pixel_height
 
-    print("DEBUG: Pixelated image size:", pixel_width * pixel_count_width, pixel_height * pixel_count_height)
-
     for x_count in range(0, pixel_count_width):
         for y_count in range(0, pixel_count_height):
 
@@ -127,7 +125,7 @@ def pixelate(image: Image, pixel_width: int, pixel_height: int, image_size: Tupl
 
     if image.size[0] > pixelated_size[0] or image.size[1] > pixelated_size[1]:
         if allow_crop:
-            print(f"Cropping image from resolution {image.size} to resolution {pixelated_size}...")
+            print(f"Cropping image from resolution {image.size} to {pixelated_size}...")
             image = crop_image(image, (0, 0), pixelated_size)
         else:
             print("Pixelated area does not cover whole image, if this is not desired use flag --allow-crop to crop image")
