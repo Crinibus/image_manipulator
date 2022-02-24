@@ -50,8 +50,6 @@ def create_average_color_image(
     print(f"Creating image with average color of image: {input_image_path}...")
     input_image, input_px = img_mani.load_image(input_image_path)
     average_color = img_mani.get_average_color(input_px, input_image.size)
-    # image, px = img_mani.create_image_with_color(average_color, (200, 200))
-    # image.save(output_image_path)
     create_image(average_color, output_image_size, output_image_path)
     print(f"See average color image at: {output_image_path}")
     print(f"Average color of image is: {average_color}")
@@ -72,6 +70,7 @@ def create_image(color: str, size: Tuple, output_path: str):
 def resize_image_from_path(input_path: str, output_path: str, size: Tuple):
     img = img_mani.resize_image_from_path(input_path, size)
     img.save(output_path)
+    print(f"See resized image at: {output_path}")
 
 
 def create_grid_image(input_path: str, output_path: str, grid_size: Tuple[int, int], grid_hex_color: str, allow_crop: bool):
