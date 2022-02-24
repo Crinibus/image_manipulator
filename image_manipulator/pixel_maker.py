@@ -50,43 +50,13 @@ def main():
 
 
 def set_pixels_size(pixels, image_size: Tuple[int, int], pixel_size: Tuple[int, int], allow_crop: bool) -> Image:
-    pixel_count_width = math.floor(image_size[0] / pixel_size[0])
-    pixel_count_height = math.floor(image_size[1] / pixel_size[1])
-
-    pixels_to_average = pixel_size[0] * pixel_size[1]
-
-    # pixelate(pixels, pixel_size[0], pixel_size[1], pixels_to_average, pixel_count_width, pixel_count_height)
     return pixelate(pixels, pixel_size[0], pixel_size[1], image_size, allow_crop)
-
-    # for x_count in range(pixel_count_width):
-    #     for y_count in range(pixel_count_height):
-
-    #         image_color = RgbColor()
-
-    #         for x_pixel in range(pixel_size[0]):
-    #             for y_pixel in range(pixel_size[1]):
-    #                 pixel = pixels[
-    #                     x_pixel + x_count * pixel_size[0],
-    #                     y_pixel + y_count * pixel_size[1],
-    #                 ]
-    #                 image_color.add_rgb(pixel)
-
-    #         image_color.calculate_average(pixels_to_average)
-
-    #         # set pixels to average color
-    #         for x_pixel in range(pixel_size[0]):
-    #             for y_pixel in range(pixel_size[1]):
-    #                 pixels[
-    #                     x_pixel + x_count * pixel_size[0],
-    #                     y_pixel + y_count * pixel_size[1],
-    #                 ] = image_color.average
 
 
 def set_pixel_count(image: Image, image_size: Tuple[int, int], pixel_count: Tuple[int, int], allow_crop: bool) -> Image:
     pixel_width = math.floor(image_size[0] / pixel_count[0])
     pixel_height = math.floor(image_size[1] / pixel_count[1])
 
-    # pixelate(pixels, pixel_width, pixel_height, pixels_to_average, pixel_count[0], pixel_count[1])
     return pixelate(image, pixel_width, pixel_height, image_size, allow_crop)
 
 
