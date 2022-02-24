@@ -28,10 +28,7 @@ def create_grid_image(image_path, grid_size: Tuple[int, int], grid_rgb_color: Tu
 
     # plus one on each axis to compare because minus one before
     if image.size[0] > nice_grid_image_size[0] + 1 or image.size[1] > nice_grid_image_size[1] + 1:
-        # if (image.size[0] % offset_x != 0 or image.size[1] % offset_y != 0):
-
         if allow_crop:
-            # new_image_size = (offset_x * grid_size[0] - 1, offset_y * grid_size[1] - 1)
             print(f"Cropping image from resolution {image.size} to {nice_grid_image_size}...")
             image = crop_image(image, (0, 0), nice_grid_image_size)
         else:
