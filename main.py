@@ -21,6 +21,9 @@ def main():
     if args.resize:
         resize_image_from_path(args.input_path, args.output_path, args.size)
 
+    if args.grid:
+        create_grid_image(args.input_path, args.output_path, args.grid, args.color, args.allow_crop)
+
 
 def pixel_art(
     input_image_path: Path,
@@ -69,6 +72,20 @@ def create_image(color: str, size: Tuple, output_path: str):
 def resize_image_from_path(input_path: str, output_path: str, size: Tuple):
     img = img_mani.resize_image_from_path(input_path, size)
     img.save(output_path)
+
+
+def create_grid_image(input_path: str, output_path: str, grid_size: Tuple[int, int], grid_hex_color: str, allow_crop: bool):
+    if not img_mani.RgbColor.is_hex(grid_hex_color):
+        print("Color must be in hex format (with '#') when using --grid")
+        return
+
+    print("Creating grid...")
+    grid_rgb_color = tuple(img_mani.RgbColor.from_hex_to_rgb(grid_hex_color))
+
+    img, px = img_mani.load_image(input_path)
+    img = img_mani.create_grid_image(input_path, grid_size, grid_rgb_color, allow_crop)
+    img.save(output_path)
+    print(f"See image with grid at: {output_path}")
 
 
 if __name__ == "__main__":

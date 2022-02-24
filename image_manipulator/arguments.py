@@ -78,6 +78,15 @@ def argparse_setup() -> argparse.ArgumentParser.parse_args:
     )
 
     parser.add_argument(
+        "--grid",
+        help="draw a grid of given size on top of the given image",
+        type=int,
+        nargs=2,
+        dest="grid",
+        metavar=("WIDTH", "HEIGHT"),
+    )
+
+    parser.add_argument(
         "--size",
         help="specify size",
         type=int,
