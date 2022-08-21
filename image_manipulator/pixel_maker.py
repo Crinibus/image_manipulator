@@ -6,18 +6,18 @@ from image_manipulator.resize import crop_image
 from image_manipulator.misc import RgbColor, Size
 
 
-def set_pixels_size(pixels, pixel_size: Tuple[int, int], allow_crop: bool) -> Image:
+def set_pixels_size(pixels, pixel_size: Tuple[int, int], allow_crop: bool) -> Image.Image:
     return pixelate(pixels, pixel_size[0], pixel_size[1], allow_crop)
 
 
-def set_pixel_count(image: Image, pixel_count: Tuple[int, int], allow_crop: bool) -> Image:
+def set_pixel_count(image: Image.Image, pixel_count: Tuple[int, int], allow_crop: bool) -> Image.Image:
     pixel_width = math.floor(image.size[0] / pixel_count[0])
     pixel_height = math.floor(image.size[1] / pixel_count[1])
 
     return pixelate(image, pixel_width, pixel_height, allow_crop)
 
 
-def pixelate(image: Image, pixel_width: int, pixel_height: int, allow_crop: bool):
+def pixelate(image: Image.Image, pixel_width: int, pixel_height: int, allow_crop: bool) -> Image.Image:
     image_width, image_height = image.size
     pixels = image.load()
     pixels_to_average = pixel_width * pixel_height
