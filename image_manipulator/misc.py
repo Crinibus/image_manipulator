@@ -58,9 +58,9 @@ class Size:
         return f"{self.width}, {self.height}"
 
 
-def load_image(image_path: str, image_mode: str = "RGBA") -> Tuple:
+def load_image(image_path: str, image_mode: str = "RGBA") -> Tuple[Image.Image, PyAccess]:
     """Load image. Default image mode is 'RGBA'.
     Return image and pixels of image"""
     image = Image.open(image_path).convert(image_mode)
-    px = image.load()
-    return image, px
+    pixels = image.load()
+    return image, pixels
