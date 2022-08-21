@@ -1,4 +1,4 @@
-from typing import Tuple
+from typing import Generator, Tuple
 from dataclasses import dataclass
 from PIL import Image
 from PIL.PyAccess import PyAccess
@@ -73,3 +73,16 @@ def load_image(image_path: str, image_mode: str = "RGBA") -> Tuple[Image.Image, 
     image = Image.open(image_path).convert(image_mode)
     pixels = image.load()
     return image, pixels
+
+
+def iterate_pixels(width, height) -> Generator[Tuple[int, int], None, None]:
+    for x in range(0, width):
+        for y in range(0, height):
+            yield x, y
+
+
+def iterate_image_pixels(image: Image.Image) -> Generator[Tuple[int, int], None, None]:
+    image_width, image_height = image
+
+    for pixel_xy in iterate_pixels(image_width, image_height):
+        yield pixel_xy
