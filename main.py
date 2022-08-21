@@ -33,7 +33,7 @@ def pixel_art(
     allow_crop: bool,
 ) -> None:
     print(f"Creating pixelated image of image: {input_image_path}...")
-    image, px = img_mani.load_image(input_image_path)
+    image, _ = img_mani.load_image(input_image_path)
 
     if pixel_size:
         image = img_mani.set_pixels_size(image, pixel_size, allow_crop)
@@ -48,8 +48,8 @@ def create_average_color_image(
     input_image_path: Path, output_image_path: Path, output_image_size: Tuple[int, int] = (200, 200)
 ) -> None:
     print(f"Creating image with average color of image: {input_image_path}...")
-    input_image, input_px = img_mani.load_image(input_image_path)
-    average_color = img_mani.get_average_color(input_px, input_image.size)
+    input_image, input_pixels = img_mani.load_image(input_image_path)
+    average_color = img_mani.get_average_color(input_pixels, input_image.size)
     create_image(average_color, output_image_size, output_image_path)
     print(f"See average color image at: {output_image_path}")
     print(f"Average color of image is: {average_color}")
@@ -57,13 +57,13 @@ def create_average_color_image(
 
 def get_average_color(input_image_path: Path) -> None:
     print(f"Calculating average color of image {input_image_path}...")
-    image, px = img_mani.load_image(input_image_path)
-    average_color = img_mani.get_average_color(px, image.size)
+    image, pixels = img_mani.load_image(input_image_path)
+    average_color = img_mani.get_average_color(pixels, image.size)
     print(f"Average color of image is: {average_color}")
 
 
-    image, px = img_mani.create_image_with_color(color, size)
 def create_image(color: str, size: Tuple, output_path: str) -> None:
+    image, _ = img_mani.create_image_with_color(color, size)
     image.save(output_path)
 
 
@@ -81,7 +81,7 @@ def create_grid_image(input_path: str, output_path: str, grid_size: Tuple[int, i
     print("Creating grid...")
     grid_rgb_color = tuple(img_mani.RgbColor.from_hex_to_rgb(grid_hex_color))
 
-    img, px = img_mani.load_image(input_path)
+    img, _ = img_mani.load_image(input_path)
     img = img_mani.create_grid_image(input_path, grid_size, grid_rgb_color, allow_crop)
     img.save(output_path)
     print(f"See image with grid at: {output_path}")
