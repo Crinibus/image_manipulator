@@ -38,7 +38,7 @@ def argparse_setup() -> argparse.ArgumentParser.parse_args:
         type=int,
         nargs=2,
         dest="pixel_count",
-        metavar=("WIDTH", "HEIGHT"),
+        metavar=("X", "Y"),
     )
 
     parser.add_argument(
