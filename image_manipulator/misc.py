@@ -1,6 +1,7 @@
 from typing import Tuple
 from dataclasses import dataclass
 from PIL import Image
+from PIL.PyAccess import PyAccess
 
 
 @dataclass
