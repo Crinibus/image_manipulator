@@ -3,7 +3,7 @@ from pathlib import Path
 import image_manipulator as img_mani
 
 
-def main():
+def main() -> None:
     args = img_mani.argparse_setup()
 
     if args.pixel:
@@ -31,7 +31,7 @@ def pixel_art(
     pixel_size: Tuple[int, int],
     pixel_count: Tuple[int, int],
     allow_crop: bool,
-):
+) -> None:
     print(f"Creating pixelated image of image: {input_image_path}...")
     image, px = img_mani.load_image(input_image_path)
 
@@ -46,7 +46,7 @@ def pixel_art(
 
 def create_average_color_image(
     input_image_path: Path, output_image_path: Path, output_image_size: Tuple[int, int] = (200, 200)
-):
+) -> None:
     print(f"Creating image with average color of image: {input_image_path}...")
     input_image, input_px = img_mani.load_image(input_image_path)
     average_color = img_mani.get_average_color(input_px, input_image.size)
@@ -55,25 +55,25 @@ def create_average_color_image(
     print(f"Average color of image is: {average_color}")
 
 
-def get_average_color(input_image_path: Path):
+def get_average_color(input_image_path: Path) -> None:
     print(f"Calculating average color of image {input_image_path}...")
     image, px = img_mani.load_image(input_image_path)
     average_color = img_mani.get_average_color(px, image.size)
     print(f"Average color of image is: {average_color}")
 
 
-def create_image(color: str, size: Tuple, output_path: str):
     image, px = img_mani.create_image_with_color(color, size)
+def create_image(color: str, size: Tuple, output_path: str) -> None:
     image.save(output_path)
 
 
-def resize_image_from_path(input_path: str, output_path: str, size: Tuple):
+def resize_image_from_path(input_path: str, output_path: str, size: Tuple) -> None:
     img = img_mani.resize_image_from_path(input_path, size)
     img.save(output_path)
     print(f"See resized image at: {output_path}")
 
 
-def create_grid_image(input_path: str, output_path: str, grid_size: Tuple[int, int], grid_hex_color: str, allow_crop: bool):
+def create_grid_image(input_path: str, output_path: str, grid_size: Tuple[int, int], grid_hex_color: str, allow_crop: bool) -> None:
     if not img_mani.RgbColor.is_hex(grid_hex_color):
         print("Color must be in hex format (with '#') when using --grid")
         return
