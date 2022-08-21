@@ -1,10 +1,11 @@
 from typing import Tuple
+from PIL import Image
 
 from image_manipulator.misc import load_image, iterate_image_pixels
 from image_manipulator.resize import crop_image
 
 
-def create_grid_image(image_path, grid_size: Tuple[int, int], grid_rgb_color: Tuple[int, int, int], allow_crop: bool):
+def create_grid_image(image_path, grid_size: Tuple[int, int], grid_rgb_color: Tuple[int, int, int], allow_crop: bool) -> Image.Image:
     grid_width, grid_height = grid_size
     image, pixels = load_image(image_path)
     image_width, image_height = image.size
