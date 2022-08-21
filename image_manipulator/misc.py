@@ -33,7 +33,7 @@ class RgbColor:
     def from_hex_to_rgb(hex_value: str) -> Tuple[int, int, int]:
         hex_value = hex_value.strip("#")
         # convert from base 16 to base 10 in pairs of two digits
-        return [int(hex_value[i : i + 2], 16) for i in range(0, len(hex_value), 2)]
+        return tuple([int(hex_value[i : i + 2], 16) for i in range(0, len(hex_value), 2)])
 
     @staticmethod
     def is_hex(color_input: str) -> bool:

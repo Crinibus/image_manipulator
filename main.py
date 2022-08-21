@@ -79,7 +79,7 @@ def create_grid_image(input_path: str, output_path: str, grid_size: Tuple[int, i
         return
 
     print("Creating grid...")
-    grid_rgb_color = tuple(img_mani.RgbColor.from_hex_to_rgb(grid_hex_color))
+    grid_rgb_color = img_mani.RgbColor.from_hex_to_rgb(grid_hex_color)
 
     img, _ = img_mani.load_image(input_path)
     img = img_mani.create_grid_image(input_path, grid_size, grid_rgb_color, allow_crop)
