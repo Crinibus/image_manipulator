@@ -49,23 +49,24 @@ def main():
     print(f"\nSee result in {output_path}")
 
 
-def set_pixels_size(pixels, image_size: Tuple[int, int], pixel_size: Tuple[int, int], allow_crop: bool) -> Image:
-    return pixelate(pixels, pixel_size[0], pixel_size[1], image_size, allow_crop)
+def set_pixels_size(pixels, pixel_size: Tuple[int, int], allow_crop: bool) -> Image:
+    return pixelate(pixels, pixel_size[0], pixel_size[1], allow_crop)
 
 
-def set_pixel_count(image: Image, image_size: Tuple[int, int], pixel_count: Tuple[int, int], allow_crop: bool) -> Image:
-    pixel_width = math.floor(image_size[0] / pixel_count[0])
-    pixel_height = math.floor(image_size[1] / pixel_count[1])
+def set_pixel_count(image: Image, pixel_count: Tuple[int, int], allow_crop: bool) -> Image:
+    pixel_width = math.floor(image.size[0] / pixel_count[0])
+    pixel_height = math.floor(image.size[1] / pixel_count[1])
 
-    return pixelate(image, pixel_width, pixel_height, image_size, allow_crop)
+    return pixelate(image, pixel_width, pixel_height, allow_crop)
 
 
-def pixelate(image: Image, pixel_width: int, pixel_height: int, image_size: Tuple[int, int], allow_crop: bool):
+def pixelate(image: Image, pixel_width: int, pixel_height: int, allow_crop: bool):
+    image_width, image_height = image.size
     pixels = image.load()
     pixels_to_average = pixel_width * pixel_height
 
-    pixel_count_width = image_size[0] // pixel_width
-    pixel_count_height = image_size[1] // pixel_height
+    pixel_count_width = image_width // pixel_width
+    pixel_count_height = image_height // pixel_height
 
     for x_count in range(0, pixel_count_width):
         for y_count in range(0, pixel_count_height):
@@ -93,7 +94,7 @@ def pixelate(image: Image, pixel_width: int, pixel_height: int, image_size: Tupl
 
     pixelated_size = (pixel_width * pixel_count_width, pixel_height * pixel_count_height)
 
-    if image.size[0] > pixelated_size[0] or image.size[1] > pixelated_size[1]:
+    if image_width > pixelated_size[0] or image_height > pixelated_size[1]:
         if allow_crop:
             print(f"Cropping image from resolution {image.size} to {pixelated_size}...")
             image = crop_image(image, (0, 0), pixelated_size)

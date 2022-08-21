@@ -36,9 +36,9 @@ def pixel_art(
     image, px = img_mani.load_image(input_image_path)
 
     if pixel_size:
-        image = img_mani.set_pixels_size(image, image.size, pixel_size, allow_crop)
+        image = img_mani.set_pixels_size(image, pixel_size, allow_crop)
     else:
-        image = img_mani.set_pixel_count(image, image.size, pixel_count, allow_crop)
+        image = img_mani.set_pixel_count(image, pixel_count, allow_crop)
 
     image.save(output_image_path)
     print(f"See pixelated image at: {output_image_path}")

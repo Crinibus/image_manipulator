@@ -5,12 +5,15 @@ from image_manipulator.resize import crop_image
 
 
 def create_grid_image(image_path, grid_size: Tuple[int, int], grid_rgb_color: Tuple[int, int, int], allow_crop: bool):
+    grid_width, grid_height = grid_size
     image, px = load_image(image_path)
-    offset_x = image.size[0] // grid_size[0]
-    offset_y = image.size[1] // grid_size[1]
+    image_width, image_height = image.size
 
-    for x_pixel in range(0, image.size[0]):
-        for y_pixel in range(0, image.size[1]):
+    offset_x = image_width // grid_width
+    offset_y = image_height // grid_height
+
+    for x_pixel in range(0, image_width):
+        for y_pixel in range(0, image_height):
             # skip upper left corner pixel to avoid line at edge
             if x_pixel == 0 and y_pixel == 0:
                 continue
@@ -24,10 +27,10 @@ def create_grid_image(image_path, grid_size: Tuple[int, int], grid_rgb_color: Tu
                 px[x_pixel - 1, y_pixel - 1] = grid_rgb_color
 
     # minus one on each axis because don't want a line at the edges of the image
-    nice_grid_image_size = (offset_x * grid_size[0] - 1, offset_y * grid_size[1] - 1)
+    nice_grid_image_size = (offset_x * grid_width - 1, offset_y * grid_height - 1)
 
     # plus one on each axis to compare because minus one before
-    if image.size[0] > nice_grid_image_size[0] + 1 or image.size[1] > nice_grid_image_size[1] + 1:
+    if image_width > nice_grid_image_size[0] + 1 or image_height > nice_grid_image_size[1] + 1:
         if allow_crop:
             print(f"Cropping image from resolution {image.size} to {nice_grid_image_size}...")
             image = crop_image(image, (0, 0), nice_grid_image_size)

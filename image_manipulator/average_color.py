@@ -36,11 +36,12 @@ def main():
 
 
 def get_average_color(pixels, image_size: Tuple[int, int]) -> Tuple[int, int, int]:
+    image_width, image_height = image_size
     pixel_count = 0
     image_color = RgbColor()
 
-    for x in range(image_size[0]):
-        for y in range(image_size[1]):
+    for x in range(image_width):
+        for y in range(image_height):
             pixel = pixels[x, y]
 
             # skip pixels that are transparent
