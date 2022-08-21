@@ -57,6 +57,14 @@ class Size:
     def __str__(self) -> str:
         return f"{self.width}, {self.height}"
 
+    def __getitem__(self, pos) -> int:
+        if pos == 0:
+            return self.width
+        elif pos == 1:
+            return self.height
+
+        raise ValueError("size index out of range")
+
 
 def load_image(image_path: str, image_mode: str = "RGBA") -> Tuple[Image.Image, PyAccess]:
     """Load image. Default image mode is 'RGBA'.
